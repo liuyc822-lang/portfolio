@@ -1519,7 +1519,7 @@
 
         <section class="contact-section" id="contact">
             <div class="contact-hero" style="padding:0;">
-                <div id="contact-particle-wrap" style="position:relative;width:100%;height:60vh;cursor:none;">
+                <div id="contact-particle-wrap" style="position:relative;width:100%;aspect-ratio:5/2;max-height:55vh;">
                     <canvas id="contact-canvas" style="display:block;width:100%;height:100%;"></canvas>
                 </div>
             </div>
@@ -1664,27 +1664,11 @@
                 function frame(){
                     ctx.clearRect(0,0,W,H);
                     var target = state === 'A' ? 0 : 1;
-                    stateLerp += (target - stateLerp) * 0.08;
-                    var R = 130, R2 = R*R;
+                    stateLerp += (target - stateLerp) * 0.05;
                     for (var i=0;i<dots.length;i++){
                         var d = dots[i];
                         var v = d.vA + (d.vB - d.vA) * stateLerp;
                         d.v += (v - d.v) * 0.18;
-                        var dx = d.ox - d.x, dy = d.oy - d.y;
-                        var fx = dx * 0.08, fy = dy * 0.08;
-                        var mdx = d.x - mouseX, mdy = d.y - mouseY;
-                        var md2 = mdx*mdx + mdy*mdy;
-                        if (md2 < R2){
-                            var md = Math.sqrt(md2) + 0.001;
-                            var k = 1 - md/R;
-                            var force = k*k * 5.5;
-                            fx += (mdx/md) * force;
-                            fy += (mdy/md) * force;
-                        }
-                        d.vx = (d.vx + fx) * 0.82;
-                        d.vy = (d.vy + fy) * 0.82;
-                        d.x += d.vx;
-                        d.y += d.vy;
                         var darkness = d.v;
                         var base = 210;
                         var dark = 26;
@@ -1692,19 +1676,13 @@
                         var radius = 1.6 + darkness * 1.7;
                         ctx.fillStyle = 'rgb(' + g + ',' + g + ',' + g + ')';
                         ctx.beginPath();
-                        ctx.arc(d.x, d.y, radius, 0, Math.PI*2);
+                        ctx.arc(d.ox, d.oy, radius, 0, Math.PI*2);
                         ctx.fill();
                     }
                     requestAnimationFrame(frame);
                 }
 
-                wrap.addEventListener('mouseenter', function(){ state = 'B'; });
-                wrap.addEventListener('mouseleave', function(){ state = 'A'; mouseX = mouseY = -9999; });
-                wrap.addEventListener('mousemove', function(e){
-                    var r = canvas.getBoundingClientRect();
-                    mouseX = e.clientX - r.left;
-                    mouseY = e.clientY - r.top;
-                });
+                setInterval(function(){ state = state === 'A' ? 'B' : 'A'; }, 3500);
 
                 window.addEventListener('resize', resize);
                 if (document.fonts && document.fonts.ready){
