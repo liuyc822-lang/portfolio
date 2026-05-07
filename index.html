@@ -256,7 +256,7 @@
 
                 // ========== Gallery Horizontal Scroll ==========
                 const galleryWrapper = document.querySelector('.gallery-wrapper');
-                if (galleryWrapper) {
+                if (galleryWrapper && window.innerWidth > 768) {
                     gsap.to(galleryWrapper, {
                         x: () => -(galleryWrapper.scrollWidth - window.innerWidth),
                         ease: "none",
@@ -269,7 +269,8 @@
                             invalidateOnRefresh: true
                         }
                     });
-
+                }
+                if (galleryWrapper) {
                     // Gallery hover crossfade
                     document.querySelectorAll('.gallery-item').forEach((item, index) => {
                         const galleryImg = item.querySelector('.gallery-img');
@@ -1353,14 +1354,66 @@
         .line-reveal.active { width: 100%; }
 
         @media (max-width: 768px) {
-            .editorial-grid { grid-template-columns: 1fr !important; }
-            .editorial-grid div { grid-column: 1 / -1 !important; margin-top: 20px !important; }
-            .hero-title-line { font-size: clamp(3.5rem, 12vw, 8rem); }
-            .hero-meta { right: 5vw; font-size: 0.55rem; }
-            .about-inner { grid-template-columns: 1fr; padding: 10vh 30px; gap: 8vh; }
-            .about-block.right { justify-self: start; }
+            /* Cursor */
             body { cursor: auto; }
             .cursor, .cursor-dot { display: none; }
+
+            /* Nav */
+            nav { padding: 16px 20px !important; font-size: 0.6rem !important; }
+            nav a { margin-left: 12px !important; }
+
+            /* Hero */
+            .editorial-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+            .editorial-grid div { grid-column: 1 / -1 !important; margin-top: 20px !important; }
+            .hero-title-line { font-size: clamp(2.6rem, 14vw, 5rem); }
+            .hero-meta { right: 5vw; font-size: 0.55rem; }
+
+            /* About */
+            .about-inner { grid-template-columns: 1fr !important; padding: 10vh 24px !important; gap: 6vh !important; }
+            .about-block.left, .about-block.right { max-width: 100% !important; justify-self: start !important; }
+
+            /* Gallery — vertical stack on mobile (pin disabled via JS) */
+            .gallery-section { height: auto !important; padding: 60px 0; }
+            .gallery-wrapper { flex-direction: column !important; height: auto !important; width: 100% !important; padding: 0 24px !important; gap: 40px !important; transform: none !important; }
+            .gallery-caption { width: 100% !important; margin-top: 0 !important; text-align: left; }
+            .gallery-item { width: 100% !important; height: auto !important; aspect-ratio: 4/3; align-self: stretch !important; margin: 0 !important; }
+            .item-tall, .item-square, .item-landscape { width: 100% !important; height: auto !important; aspect-ratio: 4/3 !important; margin: 0 !important; }
+            .gallery-item:hover .gallery-img { transform: none !important; }
+
+            /* Project detail overlay */
+            #project-detail .detail-content > div[style*="100vh"],
+            #project-detail .detail-content > div:first-child { height: auto !important; min-height: auto !important; padding-top: 60px !important; }
+            #project-detail .detail-content [style*="display:flex"][style*="overflow:hidden"],
+            #project-detail .detail-content [style*="display: flex"][style*="overflow:hidden"] { flex-direction: column !important; height: auto !important; }
+            #project-detail .detail-content [style*="width:50%"],
+            #project-detail .detail-content [style*="width: 50%"],
+            #project-detail .detail-content [style*="width:70%"],
+            #project-detail .detail-content [style*="width:30%"] { width: 100% !important; flex-shrink: 1 !important; border-right: none !important; }
+            #project-detail .detail-content [style*="height:100%"][style*="width:70%"],
+            #project-detail .detail-content [style*="height:100%"][style*="width:50%"] { height: 50vh !important; border-bottom: 1.5px solid #1a1a1a; }
+            #project-detail .detail-content [style*="grid-template-columns"] { grid-template-columns: 1fr !important; gap: 30px !important; }
+            #project-detail .detail-content [style*="padding:80px"],
+            #project-detail .detail-content [style*="padding:100px"],
+            #project-detail .detail-content [style*="padding: 80px"],
+            #project-detail .detail-content [style*="padding: 100px"] { padding: 50px 24px !important; }
+            #project-detail h1 { font-size: clamp(1.8rem, 8vw, 3rem) !important; }
+            #project-detail .p1-txt { max-width: 100% !important; }
+            #project-detail .detail-content [style*="width:120%"] { width: 100% !important; }
+            #project-detail .detail-content [style*="width:70%"][style*="margin:0 auto"] { width: 100% !important; }
+            #project-detail .detail-content [style*="max-width:48%"] { max-width: 48% !important; }
+            #project-detail .detail-content [style*="aspect-ratio:16/9"] { aspect-ratio: auto !important; min-height: 60vh; padding: 40px 24px !important; }
+            #flipbook-container { max-width: 100% !important; }
+            #flipbook-container button { padding: 8px 12px !important; font-size: 0.55rem !important; }
+
+            /* Contact */
+            #contact-particle-wrap { height: 40vh !important; }
+            .contact-footer { padding: 30px 20px !important; font-size: 0.6rem !important; line-height: 1.8; }
+        }
+
+        @media (max-width: 480px) {
+            nav { font-size: 0.55rem !important; }
+            nav a { margin-left: 8px !important; }
+            #contact-particle-wrap { height: 32vh !important; }
         }
     </style>
 </head>
@@ -1897,7 +1950,7 @@
 
         // ========== Gallery Horizontal Scroll ==========
         const galleryWrapper = document.querySelector('.gallery-wrapper');
-        gsap.to(galleryWrapper, {
+        if (galleryWrapper && window.innerWidth > 768) gsap.to(galleryWrapper, {
             x: () => -(galleryWrapper.scrollWidth - window.innerWidth),
             ease: "none",
             scrollTrigger: {
