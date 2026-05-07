@@ -275,12 +275,20 @@
                         const galleryImg = item.querySelector('.gallery-img');
                         const projectClass = Array.from(item.classList).find(cls => cls.startsWith('item-p'));
                         const projectNum = projectClass ? parseInt(projectClass.replace('item-p', '')) : index + 1;
-                        if (!item.querySelector('.gallery-img-hover')) {
-                            const hoverLayer = document.createElement('div');
+                        let hoverLayer = item.querySelector('.gallery-img-hover');
+                        if (!hoverLayer) {
+                            hoverLayer = document.createElement('div');
                             hoverLayer.className = 'gallery-img-hover';
-                            hoverLayer.style.backgroundImage = `url('project${projectNum}.${projectNum}.jpg')`;
                             item.insertBefore(hoverLayer, galleryImg.nextSibling);
                         }
+                        const hoverSrc = `project${projectNum}.${projectNum}.jpg`;
+                        let hoverLoaded = false;
+                        item.addEventListener('mouseenter', () => {
+                            if (!hoverLoaded) {
+                                hoverLayer.style.backgroundImage = `url('${hoverSrc}')`;
+                                hoverLoaded = true;
+                            }
+                        });
 
                         item.addEventListener('mousemove', (e) => {
                             const rect = item.getBoundingClientRect();
@@ -654,13 +662,13 @@
                             <div>
                                 <span class="p1-lbl">Outcome</span>
                                 <div style="display:flex;flex-direction:column;gap:14px;">
-                                    <img loading="lazy" src="project4/pj4.5.png" style="width:100%;height:auto;display:block;object-fit:contain;">
-                                    <img loading="lazy" src="project4/pj4.6.png" style="width:100%;height:auto;display:block;object-fit:contain;">
+                                    <img loading="lazy" src="project4/pj4.5.jpg" style="width:100%;height:auto;display:block;object-fit:contain;">
+                                    <img loading="lazy" src="project4/pj4.6.jpg" style="width:100%;height:auto;display:block;object-fit:contain;">
                                 </div>
                             </div>
                             <div>
                                 <div class="p1-fr" style="overflow:hidden;">
-                                    <img loading="lazy" class="p1-imgc" src="project4/pj4.10.png" style="width:100%;height:auto;display:block;">
+                                    <img loading="lazy" class="p1-imgc" src="project4/pj4.10.jpg" style="width:100%;height:auto;display:block;">
                                 </div>
                             </div>
                             <div>
@@ -1908,12 +1916,20 @@
             const projectClass = Array.from(item.classList).find(cls => cls.startsWith('item-p'));
             const projectNum = projectClass ? parseInt(projectClass.replace('item-p', '')) : index + 1;
 
-            if (!item.querySelector('.gallery-img-hover')) {
-                const hoverLayer = document.createElement('div');
+            let hoverLayer = item.querySelector('.gallery-img-hover');
+            if (!hoverLayer) {
+                hoverLayer = document.createElement('div');
                 hoverLayer.className = 'gallery-img-hover';
-                hoverLayer.style.backgroundImage = `url('project${projectNum}.${projectNum}.jpg')`;
                 item.insertBefore(hoverLayer, galleryImg.nextSibling);
             }
+            const hoverSrc = `project${projectNum}.${projectNum}.jpg`;
+            let hoverLoaded = false;
+            item.addEventListener('mouseenter', () => {
+                if (!hoverLoaded) {
+                    hoverLayer.style.backgroundImage = `url('${hoverSrc}')`;
+                    hoverLoaded = true;
+                }
+            }, { once: false });
 
             item.addEventListener('mousemove', (e) => {
                 const rect = item.getBoundingClientRect();
