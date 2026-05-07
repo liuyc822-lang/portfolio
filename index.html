@@ -256,7 +256,7 @@
 
                 // ========== Gallery Horizontal Scroll ==========
                 const galleryWrapper = document.querySelector('.gallery-wrapper');
-                if (galleryWrapper && window.innerWidth > 768) {
+                if (galleryWrapper){
                     gsap.to(galleryWrapper, {
                         x: () => -(galleryWrapper.scrollWidth - window.innerWidth),
                         ease: "none",
@@ -1368,16 +1368,23 @@
             .hero-title-line { font-size: clamp(2.6rem, 14vw, 5rem); }
             .hero-meta { right: 5vw; font-size: 0.55rem; }
 
-            /* About */
+            /* About — text on top, animation below; force visible (avoid GSAP-stuck opacity:0) */
             .about-inner { grid-template-columns: 1fr !important; padding: 10vh 24px !important; gap: 6vh !important; }
             .about-block.left, .about-block.right { max-width: 100% !important; justify-self: start !important; }
+            .about-label, .about-text, .tech-list { opacity: 1 !important; }
+            .about-text { font-size: 0.9rem !important; }
+            .tech-list { font-size: 0.85rem !important; line-height: 2.1 !important; }
+            .about-animation { width: min(80vw, 320px) !important; height: min(80vw, 320px) !important; margin: 0 auto; }
 
-            /* Gallery — vertical stack on mobile (pin disabled via JS) */
-            .gallery-section { height: auto !important; padding: 60px 0; }
-            .gallery-wrapper { flex-direction: column !important; height: auto !important; width: 100% !important; padding: 0 24px !important; gap: 40px !important; transform: none !important; }
-            .gallery-caption { width: 100% !important; margin-top: 0 !important; text-align: left; }
-            .gallery-item { width: 100% !important; height: auto !important; aspect-ratio: 4/3; align-self: stretch !important; margin: 0 !important; }
-            .item-tall, .item-square, .item-landscape { width: 100% !important; height: auto !important; aspect-ratio: 4/3 !important; margin: 0 !important; }
+            /* Gallery — keep horizontal scroll on mobile, don't crop images */
+            .gallery-wrapper { padding: 0 6vw !important; gap: 6vw !important; }
+            .gallery-caption { margin-top: 30vh !important; font-size: 0.6rem !important; width: 60vw !important; }
+            .item-tall { width: 65vw !important; height: 70vh !important; }
+            .item-square { width: 70vw !important; height: 70vw !important; }
+            .item-landscape { width: 80vw !important; height: 50vh !important; }
+            .gallery-img { background-size: contain !important; background-repeat: no-repeat; background-color: #fafafa; }
+            .gallery-img-hover { background-size: contain !important; background-repeat: no-repeat; background-color: #fafafa; }
+            .gallery-info { font-size: 0.55rem !important; }
             .gallery-item:hover .gallery-img { transform: none !important; }
 
             /* Project detail overlay */
@@ -1577,9 +1584,15 @@
                     maskH = Math.max(1, Math.floor(H));
                     maskA = makeMask(function(c){
                         var sizeA = Math.min(W*0.16, 200);
-                        c.font = '700 ' + sizeA + 'px "Funnel Display","Inter",sans-serif';
                         c.textAlign = 'center';
                         c.textBaseline = 'middle';
+                        c.font = '700 ' + sizeA + 'px "Funnel Display","Inter",sans-serif';
+                        var maxW = W * 0.9;
+                        var textW = c.measureText('CONTACT ME').width;
+                        if (textW > maxW){
+                            sizeA = sizeA * (maxW / textW);
+                            c.font = '700 ' + sizeA + 'px "Funnel Display","Inter",sans-serif';
+                        }
                         c.fillText('CONTACT ME', W/2, H/2);
                     });
                     maskB = makeMask(function(c){
@@ -1592,6 +1605,16 @@
                         var iconSize = numSize * 1.2;
                         var gap = numSize * 0.55;
                         var totalW = iconSize + gap + numW + gap + iconSize;
+                        var maxW = W * 0.92;
+                        if (totalW > maxW){
+                            var scale = maxW / totalW;
+                            numSize *= scale;
+                            iconSize *= scale;
+                            gap *= scale;
+                            c.font = '600 ' + numSize + 'px "Inter",sans-serif';
+                            numW = c.measureText(num).width;
+                            totalW = iconSize + gap + numW + gap + iconSize;
+                        }
                         var startX = W/2 - totalW/2;
                         drawPhone(c, startX + iconSize/2, H/2, iconSize);
                         c.fillText(num, startX + iconSize + gap + numW/2, H/2);
@@ -1950,7 +1973,7 @@
 
         // ========== Gallery Horizontal Scroll ==========
         const galleryWrapper = document.querySelector('.gallery-wrapper');
-        if (galleryWrapper && window.innerWidth > 768) gsap.to(galleryWrapper, {
+        if (galleryWrapper)gsap.to(galleryWrapper, {
             x: () => -(galleryWrapper.scrollWidth - window.innerWidth),
             ease: "none",
             scrollTrigger: {
