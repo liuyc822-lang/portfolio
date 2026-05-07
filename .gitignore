@@ -19,3 +19,10 @@ memory/
 
 # Local backup (do not push)
 project_originals/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
