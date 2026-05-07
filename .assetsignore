@@ -1,0 +1,12 @@
+.git
+.gitignore
+.assetsignore
+.agents
+.claude
+node_modules
+project_originals
+memory
+patch_projects.py
+*.md
+wrangler.jsonc
+wrangler.toml
