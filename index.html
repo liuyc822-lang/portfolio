@@ -1294,7 +1294,23 @@
         .item-p4 .gallery-img { background-image: url('project4.jpg'); }
         .item-p5 .gallery-img { background-image: url('project5.jpg'); }
         .item-p6 .gallery-img { background-image: url('project6.jpg'); }
-        .item-other .gallery-img { background-image: url('other/1.jpg'); background-size: cover; background-position: center; }
+        .gallery-other-link {
+            flex-shrink: 0;
+            align-self: center;
+            cursor: pointer;
+            font-family: 'Funnel Display', sans-serif;
+            font-size: clamp(1.2rem, 2.4vw, 2.4rem);
+            font-weight: 400;
+            letter-spacing: 0.06em;
+            color: var(--text-main);
+            text-transform: uppercase;
+            padding: 0 4vw;
+            white-space: nowrap;
+            transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.19,1,0.22,1);
+            border-bottom: 1.5px solid var(--text-main);
+            line-height: 1.4;
+        }
+        .gallery-other-link:hover { opacity: 0.6; transform: translateX(8px); }
 
         .gallery-info {
             position: absolute; bottom: -30px; left: 0;
@@ -1607,7 +1623,7 @@
                 <div class="gallery-item item-landscape item-p4" onclick="openProject4()"><div class="gallery-img"></div><div class="gallery-info">04 / P-LIFE 塑生</div></div>
                 <div class="gallery-item item-landscape item-p5" onclick="openProject5()"><div class="gallery-img"></div><div class="gallery-info">05 / 水域流形</div></div>
                 <div class="gallery-item item-square item-p6" onclick="openProject7()"><div class="gallery-img"></div><div class="gallery-info">06 / GRANDPAR 帕金森步调协同工具</div></div>
-                <div class="gallery-item item-tall item-other" onclick="openProjectOther()"><div class="gallery-img"></div><div class="gallery-info">07 / OTHER PROJECTS 其他项目</div></div>
+                <div class="gallery-other-link" onclick="openProjectOther()">OTHER PROJECTS →</div>
                 
                 
                 <div style="width: 15vw; flex-shrink: 0;"></div>
