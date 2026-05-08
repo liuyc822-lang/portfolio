@@ -1533,7 +1533,7 @@
                 if (!wrap || !canvas) return;
                 var ctx = canvas.getContext('2d');
                 var W=0, H=0, dpr = Math.min(window.devicePixelRatio||1, 2);
-                var spacing = 16;
+                var spacing = window.innerWidth <= 768 ? 8 : 16;
                 var dots = [];
                 var maskA = null, maskB = null;
                 var maskW = 0, maskH = 0;
@@ -1673,7 +1673,7 @@
                         var base = 210;
                         var dark = 26;
                         var g = Math.round(base + (dark - base) * darkness);
-                        var radius = 1.6 + darkness * 1.7;
+                        var radius = (spacing/16) * (1.6 + darkness * 1.7);
                         ctx.fillStyle = 'rgb(' + g + ',' + g + ',' + g + ')';
                         ctx.beginPath();
                         ctx.arc(d.ox, d.oy, radius, 0, Math.PI*2);
