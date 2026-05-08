@@ -916,7 +916,7 @@
 
                 var imgs = '';
                 for (var i = 1; i <= 15; i++) {
-                    imgs += '<div class="other-img-cell"><img loading="lazy" src="other/' + i + '.jpg" style="width:100%;height:auto;display:block;"></div>';
+                    imgs += '<img loading="lazy" src="other/' + i + '.jpg">';
                 }
 
                 detailScrollBody.innerHTML = `
@@ -924,8 +924,8 @@
                     #project-detail { background-color: #f5f5f0 !important; }
                     #project-detail .detail-hero { display: none !important; }
                     #project-detail .detail-content { background: #f5f5f0 !important; padding: 0 !important; gap: 0 !important; align-items: stretch !important; }
-                    .other-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; padding:80px 6%; }
-                    .other-img-cell { border:1.5px solid #1a1a1a; border-radius:8px; overflow:hidden; background:#fff; }
+                    .other-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; padding:80px 6%; align-items:start; }
+                    .other-grid img { width:100%; height:auto; display:block; }
                     @media (max-width: 768px) {
                         .other-grid { grid-template-columns:1fr !important; gap:18px !important; padding:60px 24px !important; }
                     }
@@ -1296,19 +1296,19 @@
         .item-p6 .gallery-img { background-image: url('project6.jpg'); }
         .gallery-other-link {
             flex-shrink: 0;
-            align-self: center;
+            align-self: flex-end;
+            margin-bottom: 10vh;
             cursor: pointer;
             font-family: 'Funnel Display', sans-serif;
             font-size: clamp(1.2rem, 2.4vw, 2.4rem);
             font-weight: 400;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.04em;
             color: var(--text-main);
             text-transform: uppercase;
-            padding: 0 4vw;
-            white-space: nowrap;
+            padding: 0 2vw;
+            text-align: left;
+            line-height: 1.15;
             transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.19,1,0.22,1);
-            border-bottom: 1.5px solid var(--text-main);
-            line-height: 1.4;
         }
         .gallery-other-link:hover { opacity: 0.6; transform: translateX(8px); }
 
@@ -1623,7 +1623,7 @@
                 <div class="gallery-item item-landscape item-p4" onclick="openProject4()"><div class="gallery-img"></div><div class="gallery-info">04 / P-LIFE 塑生</div></div>
                 <div class="gallery-item item-landscape item-p5" onclick="openProject5()"><div class="gallery-img"></div><div class="gallery-info">05 / 水域流形</div></div>
                 <div class="gallery-item item-square item-p6" onclick="openProject7()"><div class="gallery-img"></div><div class="gallery-info">06 / GRANDPAR 帕金森步调协同工具</div></div>
-                <div class="gallery-other-link" onclick="openProjectOther()">OTHER PROJECTS →</div>
+                <div class="gallery-other-link" onclick="openProjectOther()">OTHER<br>PROJECTS →</div>
                 
                 
                 <div style="width: 15vw; flex-shrink: 0;"></div>
