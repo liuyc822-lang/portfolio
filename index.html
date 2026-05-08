@@ -1358,6 +1358,10 @@
             body { cursor: auto; }
             .cursor, .cursor-dot { display: none; }
 
+            /* Lock page horizontal scroll; only .gallery-section scrolls horizontally inside */
+            html, body { overflow-x: hidden !important; max-width: 100vw !important; }
+            main, section:not(.gallery-section) { overflow-x: hidden !important; max-width: 100vw !important; }
+
             /* Nav */
             nav { padding: 16px 20px !important; font-size: 0.6rem !important; }
             nav a { margin-left: 12px !important; }
